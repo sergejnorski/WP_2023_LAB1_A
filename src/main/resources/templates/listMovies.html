@@ -15,6 +15,13 @@
   <h1>Welcome to our Movie Ticket Shop App</h1>
 </header>
 <main>
+  <h2>Choose filter:</h2>
+  <form th:method="post" th:action="@{/filter}">
+    <label>Include this text in title: <input type="text" th:name="textFilter"></label>
+    <label>Rating of at least: <input type="number" th:name="ratingFilter" min="0.0" max="10.0" step="0.1"></label>
+    <label><input type="submit" value="Submit"></label>
+  </form>
+
   <h2>Choose movie:</h2>
   <form th:action="@{/}" th:method="post">
     <label th:each="movie : ${movies}">

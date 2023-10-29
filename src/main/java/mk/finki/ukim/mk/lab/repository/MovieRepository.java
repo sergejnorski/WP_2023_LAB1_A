@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Repository
 public class MovieRepository {
@@ -13,19 +15,28 @@ public class MovieRepository {
         return DataHolder.movies;
     }
 
-    public List<Movie> searchMovies(String text){
-        List<Movie> searchResult = new ArrayList<>();
-
-        for(Movie movie : DataHolder.movies){
-            String title = movie.getTitle().toLowerCase();
-            String description = movie.getSummary().toLowerCase();
-            text = text.toLowerCase();
-
-            if(title.contains(text) || description.contains(text)){
-                searchResult.add(movie);
-            }
-        }
-        return searchResult;
+    private boolean isTitleAndSummaryMatch(Movie movie, String text) {
+        String lowerCaseText = text.toLowerCase();
+        return movie.getTitle().toLowerCase().contains(lowerCaseText)
+                || movie.getSummary().toLowerCase().contains(lowerCaseText);
     }
 
+    private boolean isRatingMatch(Movie movie, String rating) {
+        double movieRating = movie.getRating();
+        float requiredRating = Float.parseFloat(rating);
+        return movieRating >= requiredRating;
+    }
+
+    public List<Movie> searchMovies(String text, String rating){
+        List<Movie> result = new ArrayList<>();
+
+        for (Movie movie : DataHolder.movies) {
+            if ((text.isEmpty() || isTitleAndSummaryMatch(movie, text)) && (rating.isEmpty() || isRatingMatch(movie, rating))) {
+                result.add(movie);
+            }
+        }
+
+        return result;
+
+    }
 }

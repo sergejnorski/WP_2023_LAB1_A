@@ -13,16 +13,4 @@ public class Movie {
         this.summary = summary;
         this.rating = rating;
     }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public double getRating() {
-        return rating;
-    }
 }

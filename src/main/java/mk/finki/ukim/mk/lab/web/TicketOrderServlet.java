@@ -10,7 +10,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 import java.io.IOException;
 
-@WebServlet(name = "TicketOrderServlet", value = "/ticketOrder")
+@WebServlet(urlPatterns = "/ticketOrder")
 public class TicketOrderServlet extends HttpServlet {
 
     public final SpringTemplateEngine springTemplateEngine;
@@ -20,17 +20,17 @@ public class TicketOrderServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(request, response);
-        WebContext context =  new WebContext(webExchange);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        IWebExchange webExchange = JakartaServletWebApplication
+                .buildApplication(getServletContext())
+                .buildExchange(req, resp);
+        WebContext context = new WebContext(webExchange);
 
-        context.setVariable("movieTitle", request.getParameter("title"));
-        context.setVariable("numTickets",request.getParameter("tickets"));
-        context.setVariable("clientName",request.getRemoteUser());
-        context.setVariable("clientIP",request.getRemoteAddr());
+        context.setVariable("movieTitle", req.getParameter("title"));
+        context.setVariable("numTickets", req.getParameter("tickets"));
+        context.setVariable("clientIP", req.getRemoteAddr());
 
-        springTemplateEngine.process("orderConfirmation.html", context, response.getWriter());
-
+        springTemplateEngine.process("orderConfirmation.html", context, resp.getWriter());
     }
 
     @Override

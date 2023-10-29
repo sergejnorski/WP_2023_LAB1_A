@@ -13,7 +13,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "MovieListServlet", value = "")
+@WebServlet(name = "MovieListServlet", urlPatterns  = "")
 public class MovieListServlet extends HttpServlet {
 
     private final SpringTemplateEngine springTemplateEngine;
@@ -27,11 +27,9 @@ public class MovieListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext()).buildExchange(request, response);
-
         WebContext context =  new WebContext(webExchange);
 
         List<Movie> movies = movieService.listAll();
-
         context.setVariable("movies",movies);
 
         springTemplateEngine.process("listMovies.html", context, response.getWriter());
@@ -41,9 +39,10 @@ public class MovieListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String selectedMovie = request.getParameter("selectedMovie");
+        String title = request.getParameter("selectedMovie");
         int numOfTickets = Integer.parseInt(request.getParameter("numTickets"));
+        System.out.println(title + " " + numOfTickets);
 
-        response.sendRedirect("/ticketOrder?title=" + selectedMovie +"&tickets=" + numOfTickets);
+        response.sendRedirect("/ticketOrder?title=" + title +"&tickets=" + numOfTickets);
     }
 }

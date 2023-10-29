@@ -16,20 +16,19 @@
 </header>
 <main>
   <h2>Choose movie:</h2>
-  <form th:action="@{/ticketOrder}" method="post">
+  <form th:action="@{/}" th:method="post">
     <label th:each="movie : ${movies}">
       <input type="radio" th:name="selectedMovie" th:value="${movie.title}">
       Title: <span th:text="${movie.title}"></span>,
       Summary: <span th:text="${movie.summary}"></span>,
       Rating: <span th:text="${movie.rating}"></span><br>
     </label><br>
-  <!-- Display radio buttons for each movie,
-          the value should be the movie title
-          and the displayed text should be Title: <movie_title>, Summary:<movie_summary>, Rating: <movie_rating> -->
+
   <h2>Choose number of tickets:</h2>
   <input type="number" name="numTickets" min="1" max="10"><br/>
   <br/>
   <input type="submit" value="Submit">
+  </form>
 </main>
 </body>
 </html>

@@ -24,6 +24,8 @@
 
   <h2>Choose movie:</h2>
   <form th:action="@{/}" th:method="post">
+    <label>Enter your name: <input type="text" th:name="clientName"></label>
+    <br>
     <label th:each="movie : ${movies}">
       <input type="radio" th:name="selectedMovie" th:value="${movie.title}">
       Title: <span th:text="${movie.title}"></span>,

@@ -41,8 +41,9 @@ public class MovieListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String title = request.getParameter("selectedMovie");
         int numOfTickets = Integer.parseInt(request.getParameter("numTickets"));
-        System.out.println(title + " " + numOfTickets);
+        String name = request.getParameter("clientName");
+        System.out.println(title + " " + numOfTickets + " " + name);
 
-        response.sendRedirect("/ticketOrder?title=" + title +"&tickets=" + numOfTickets);
+        response.sendRedirect("/ticketOrder?title=" + title +"&tickets=" + numOfTickets +"&name=" + name);
     }
 }
